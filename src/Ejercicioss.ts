@@ -59,24 +59,46 @@ console.log(calcularAreaTriangulo(5, -10))
 console.log(calcularAreaTriangulo(0, 10))
 console.log(calcularAreaTriangulo(5, 0))
 
-//EJERCICIO 6
-function operacionMatematicaCompleja(numero1: number, numero2: number): number {
-    if (numero2 === 0) {
-        throw new Error("No se puede dividir por cero");
+//EJERCICIO 5
+function leerArchivo() {
+    let archivo = abrirArchivo("ejemplo.txt");
+    try {
+        console.log("Realizando operaciones con el archivo:", archivo.nombre)
+        if (Math.random() < 0.5) {
+            throw new Error("Error durante la operación")
+        }
+        console.log("Operación completada exitosamente")
+    } catch (error) {
+        console.error("Ocurrió un error durante la operación:", error)
+    } finally {
+        cerrarArchivo(archivo);
     }
-    return numero1 / numero2;
+}
+function abrirArchivo(nombre: string) {
+    console.log(`Abriendo archivo: ${nombre}`)
+    return { nombre: nombre }
 }
 
-function funcionPrincipal(): void {
+function cerrarArchivo(archivo: any) {
+    console.log(`Cerrando archivo: ${archivo.nombre}`)
+}
+
+leerArchivo()
+
+//EJERCICIO 6
+function operacionCompleja(x: number, y: number): number {
+    if (y === 0) {
+        throw new Error("División por cero no permitida")
+    }
+    return x / y
+}
+function ejecutarOperacion(x: number, y: number) {
     try {
-        const resultado = operacionMatematicaCompleja(10, 0);
-        console.log("El resultado de la operación es:", resultado);
+        const resultado = operacionCompleja(x, y)
+        console.log("El resultado de la operación compleja es:", resultado)
     } catch (error) {
-        if (error instanceof Error) {
-            console.error("Error durante la operación matemática:", error.message);
-        } else {
-            console.error("Error en la operacion: ", error);
-        }
+        console.error("Error durante la ejecución de la operación:", error instanceof Error ? error.message : error)
     }
 }
-funcionPrincipal();
+ejecutarOperacion(2, 0)
+
